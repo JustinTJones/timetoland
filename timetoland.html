@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time til Bev Lands</title>
+  <script>
+  var end = new Date(2016, 8, 8, 13, 29);
+  var t = null;
+
+  function tick(end) {
+    var difms = (end) - (new Date());
+    // if (difms <= 0) { clearInterval(t); }
+
+    var daysFl = difms / 1000 / 60 / 60 / 24;
+    var days = Math.floor(daysFl);
+
+    var hoursFl = 24 * (daysFl - days);
+    var hours = Math.floor(hoursFl);
+
+    var minutesFl = 60 * (hoursFl - hours);
+    var minutes = Math.floor(minutesFl);
+
+    var secondsFl = 60 * (minutesFl - minutes);
+    var seconds = Math.floor(secondsFl);
+
+    return {
+      'total': difms,
+      'days': days,
+      'hours': hours,
+      'minutes': minutes,
+      'seconds': seconds
+    };
+  }
+
+  function update() {
+    // console.log('update()');
+    var time = tick(end);
+
+    var str = time.days.toString() + 'd:' + time.hours.toString() + 'h:' + time.minutes.toString() + 'm:' + time.seconds.toString() + 's';
+
+    document.getElementById('daysSpan').innerHTML = time.days.toString();
+    document.getElementById('hoursSpan').innerHTML = time.hours.toString();
+    document.getElementById('minutesSpan').innerHTML = time.minutes.toString();
+    document.getElementById('secondsSpan').innerHTML = time.seconds.toString();
+  }
+
+  function main_loop() {
+    t = setInterval(update, 1000);
+  }
+</script>
+  <style>
+    body { font-size: 16px; }
+    .clrFix { clear: both; }
+    .timer { width: 20em; background-color: #888; padding: 0.1em; }
+    .timerBox { width: 20%; background-color: #56F; float: left; text-align: center; margin: 2%; padding: 0.5%; }
+    .label { font-size: 0.8em; }
+    .timeValue { font-size: 1.4em; font-weight: 600; }
+    .button { text-align: center; float: left; width: 20%; padding: 0.1em; margin: 0.2em 14%; cursor: pointer; }
+    .stop { background-color: #D00; }
+    .start { background-color: #0D0; }
+  </style>
+</head>
+<body onload="main_loop()">
+  <div class="timer">
+      <span class="button start" onclick="main_loop()">Start</span>
+      <span class="button stop" onclick="clearInterval(t)">Stop</span>
+      <span class="clrFix"></span>
+    <div id="daysDiv" class="timerBox">
+      <span class="timeValue" id="daysSpan"></span><br>
+      <span class="label">Days</span>
+    </div>
+    <div id="hoursDiv" class="timerBox">
+      <span class="timeValue" id="hoursSpan"></span><br>
+      <span class="label">Hours</span>
+    </div>
+    <div id="minutesDiv" class="timerBox">
+      <span class="timeValue" id="minutesSpan"></span><br>
+      <span class="label">Minutes</span>
+    </div>
+    <div id="secondsDiv" class="timerBox">
+      <span class="timeValue" id="secondsSpan"></span><br>
+      <span class="label">Seconds</span>
+    </div>
+    <div class="clrFix"></div>
+  </div>
+</body>
+</html>
